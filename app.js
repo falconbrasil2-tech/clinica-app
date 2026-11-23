@@ -149,10 +149,10 @@
     const nav = $('#abas'); nav.hidden = false;
     nav.innerHTML = ABAS.filter((a) => a.papeis.includes(E.papel)).map((a) => `<button data-aba="${a.id}">${a.nome}</button>`).join('');
     nav.onclick = (ev) => { const b = ev.target.closest('button[data-aba]'); if (b) irPara(b.dataset.aba); };
-    $('#usuario').innerHTML = `<span>${esc(E.email)} · ${esc(ROTULO_PAPEL[E.papel] || E.papel)}</span>` +
+    $('#usuario').innerHTML = (E.cli.demo ? '' : `<span>${esc(E.email)} · ${esc(ROTULO_PAPEL[E.papel] || E.papel)}</span>`) +
       (E.cli.demo ? '<button class="btn peq sec" id="b-reiniciar">Reiniciar exemplo</button>' : '') +
-      '<button class="btn peq sec" id="b-sair">Sair</button>';
-    $('#b-sair').onclick = () => E.cli.auth.signOut().then(() => location.reload());
+      (E.cli.demo ? '' : '<button class="btn peq sec" id="b-sair">Sair</button>');
+    if (!E.cli.demo) $('#b-sair').onclick = () => E.cli.auth.signOut().then(() => location.reload());
     if (E.cli.demo) $('#b-reiniciar').onclick = () => E.cli.reiniciar();
   }
 
